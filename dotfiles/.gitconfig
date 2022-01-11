@@ -1,0 +1,114 @@
+# http://www.kernel.org/pub/software/scm/git/docs/git-config.html
+# http://help.github.com/set-your-user-name-email-and-github-token/
+
+[user]
+  name = Rakesh Patel
+  email = rakesh.patel@goodrx.com
+
+[github]
+  user = rocpatel
+  email = rakesh.patel@goodrx.com
+  org = GoodRx
+
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
+[push]
+  #Only Push Upstream for the Current Branch
+  default = upstream
+
+[core]
+  excludesfile = ~/.gitignore
+  autocrlf = false
+  safecrlf = true
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  editor=/usr/bin/vim -u NONE
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+  log = auto
+  ui = auto
+  pager = true
+
+[color "branch"]
+  current = red reverse
+  local = red
+  remote = green
+[color "diff"]
+  meta = cyan bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[color "log"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+# from https://git.wiki.kernel.org/index.php/Aliases
+[alias]
+  up = status
+  st = status
+  ci = commit
+  di = diff
+  br = branch
+  co = checkout
+  lg = log --stat -p
+  lg2 = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+  who = shortlog -s --
+  graph = log --graph --oneline --all
+  # on newer gits, --onelline abbreviates --pretty=oneline --abbrev-commit
+  # to get more verbose commit info, append --pretty=short or similar
+  gr2 = log --graph --all --pretty=oneline --decorate --abbrev-commit
+  gr = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
+
+  plom = pull origin master
+  psom = push origin master
+
+[apply]
+  whitespace = strip
+
+[diff "ruby"]
+  funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
+
+[diff]
+  tool     = opendiff
+
+[merge]
+  # For now force every merge to be visible, it is likly that only is what we want.
+  # --no-ff
+  #    Generate a merge commit even if the merge resolved as a fast-forward.
+  # ff = no
+  # --ff-only
+  #   Refuse to merge and exit with a non-zero status unless the current HEAD is already up-to-date or the merge can be resolved as a fast-forward.
+  ff = only
+  keepBackup = false
+  ## OSX/XCode
+  tool     = /usr/bin/opendiff
+
+[mergetool] 
+  keepBackup = false
+
+[mergetool "diffmerge"]
+# $LOCAL – Current branch version
+# $REMOTE – Version to be merged
+# $BASE – Common ancestor
+# $MERGED – File where results will be written
+# current version in the left pane, the merge result in the middle pane and the remote version in the right pane
+  cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
+  trustExitCode = false
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[init]
+  defaultBranch = main
+  
