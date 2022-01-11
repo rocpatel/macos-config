@@ -85,4 +85,9 @@ function mkcd() { mkdir -p "$@" && cd "$_"; }
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 alias g='git'
 alias ghwrk='cd ~/Documents/workspace/github.com'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 eval "$(starship init zsh)"
