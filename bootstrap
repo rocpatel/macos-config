@@ -1,4 +1,16 @@
 #!/usr/bin/env bash
 
-# setup workspace
-mkdir -p ~/Documents/workspace/github.com/rocpatel/macos-config
+COMMANDLINE_TOOLS="/Library/Developer/CommandLineTools"
+GITHUB_WORKSPACE="~/Documents/workspace/github.com"
+
+if [ ! -d "$COMMANDLINE_TOOLS" ]; then
+  xcode-select --install
+fi
+
+# download setup repo
+mkdir -p ${GITHUB_WORKSPACE}/rocpatel
+git clone --branch main https://github.com/rocpatel/macos-config
+
+pushd ${GITHUB_WORKSPACE}/rocpatel/macos-config
+make bootstrap
+popd
