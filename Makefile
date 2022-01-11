@@ -24,6 +24,12 @@ gitconfig: ## setup gitconfig
 	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitconfig $(GITCONFIG)
 	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitignore $(GITIGNORE)
 
+vim-setup: ## setup vim
+	@rm -rf ~/.vimrc
+	@ln -s $(MAKEFILE_DIR)/dotfiles/.vimrc ~/.vimrc
+	@rm -rf ~/.vim
+	@ln -s $(MAKEFILE_DIR)/.vim ~/.vim
+
 homebrew: | $(HOMEBREWBIN) ## install homebrew
 	@echo "Homebrew is installed"
 	@brew bundle
@@ -43,6 +49,6 @@ $(ZSHDIR):
 $(HOMEBREWBIN):
 	curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash -
 
-bootstrap: macos-defaults homebrew ohmyzsh gitconfig vscode_setup ssh-keys ## bootstrap new laptop
+bootstrap: macos-defaults homebrew ohmyzsh gitconfig vscode-setup ssh-keys ## bootstrap new laptop
 
 .PHONY: ohmyzsh help

@@ -1,10 +1,17 @@
+tap "homebrew/cask-fonts"
+
+brew "openssl"
+
+brew "awscli" 
+brew "gh" 
 brew "git" 
-brew "nvm" 
+brew "go"
 brew "httpie" 
 brew "jq" 
+brew "nvm"
+brew "starship"
 brew "yq"
-brew "gh" 
-brew "awscli" 
-brew "go"
-cask "visual-studio-code" 
+
+cask "font-fira-code-nerd-font"
 cask "iterm2" 
+cask "visual-studio-code" 
