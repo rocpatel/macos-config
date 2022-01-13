@@ -50,6 +50,9 @@
   changed = green
   untracked = cyan
 
+[commit]
+  template=~/.gitmessage
+
 # from https://git.wiki.kernel.org/index.php/Aliases
 [alias]
   up = status

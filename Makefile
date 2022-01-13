@@ -2,6 +2,7 @@ ZSHDIR := ~/.oh-my-zsh
 HOMEBREWBIN := /opt/homebrew/bin/brew
 GITCONFIG := ~/.gitconfig
 GITIGNORE := ~/.gitignore
+GITMESSAGE := ~/.gitmessage
 VSCODE_EXTENSIONS := vscodevim.vim ms-azuretools.vscode-docker eamodio.gitlens golang.go ms-kubernetes-tools.vscode-kubernetes-tools
 
 # Get the path to this Makefile and directory
@@ -23,8 +24,11 @@ ohmyzsh: | $(ZSHDIR) ## setup zsh
 
 gitconfig: ## setup gitconfig
 	@rm -rf $(GITCONFIG)
+	@rm -rf $(GITIGNORE)
+	@rm -rf $(GITMESSAGE)
 	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitconfig $(GITCONFIG)
 	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitignore $(GITIGNORE)
+	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitmessage $(GITMESSAGE)
 
 vim-setup: ## setup vim
 	@rm -rf ~/.vimrc
