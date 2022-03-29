@@ -80,7 +80,10 @@
   funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
 
 [diff]
-  tool     = opendiff
+  tool     = vscode
+
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
 
 [merge]
   # For now force every merge to be visible, it is likly that only is what we want.
@@ -92,7 +95,7 @@
   ff = only
   keepBackup = false
   ## OSX/XCode
-  tool     = /usr/bin/opendiff
+  tool     = vscode
 
 [mergetool] 
   keepBackup = false
@@ -105,6 +108,9 @@
 # current version in the left pane, the merge result in the middle pane and the remote version in the right pane
   cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
   trustExitCode = false
+
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
 
 [filter "lfs"]
   clean = git-lfs clean -- %f
