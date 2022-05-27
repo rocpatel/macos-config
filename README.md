@@ -6,5 +6,5 @@ TODO
 ## Usage
 
 ```
-curl -Ls https://raw.githubusercontent.com/rocpatel/macos-config/main/bootstrap | bash -
+GITHUB_WORKSPACE=/path/to/github/workspace curl -Ls https://raw.githubusercontent.com/rocpatel/macos-config/main/bootstrap | bash -
 ```
