@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 COMMANDLINE_TOOLS="/Library/Developer/CommandLineTools"
-GITHUB_WORKSPACE="~/Documents/workspace/github.com"
+GITHUB_WORKSPACE=${GITHUB_WORKSPACE:="~/Documents/workspace/github.com"}
 
 if [ ! -d "$COMMANDLINE_TOOLS" ]; then
   xcode-select --install
