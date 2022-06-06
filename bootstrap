@@ -9,10 +9,10 @@ fi
 
 # download setup repo
 mkdir -p ${GITHUB_WORKSPACE}/rocpatel
+git clone --branch main https://github.com/rocpatel/macos-config ${GITHUB_WORKSPACE}/rocpatel/macos-config
 
 pushd ${GITHUB_WORKSPACE}/rocpatel/macos-config
 
-git clone --branch main https://github.com/rocpatel/macos-config
 make bootstrap
 
 popd
