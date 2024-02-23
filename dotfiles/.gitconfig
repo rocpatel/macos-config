@@ -3,12 +3,10 @@
 
 [user]
   name = Rakesh Patel
-  email = rakesh.patel@kandji.io
+  email = roc@rocpatel.me
 
 [github]
   user = rocpatel
-  email = rakesh.patel@kandji.io
-  org = kandji-inc
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
