@@ -150,11 +150,11 @@ let s:next_buffer_number = 1
 " SECTION: Commands {{{1
 "============================================================
 "init the command that users start the nerd tree with
-command! -n=? -complete=dir -bar NERDTree :call s:initNerdTree('<args>')
-command! -n=? -complete=dir -bar NERDTreeToggle :call s:toggle('<args>')
+command! -n=? -nargs=? -complete=dir -bar NERDTree :call s:initNerdTree('<args>')
+command! -n=? -nargs=? -complete=dir -bar NERDTreeToggle :call s:toggle('<args>')
 command! -n=0 -bar NERDTreeClose :call s:closeTreeIfOpen()
-command! -n=1 -complete=customlist,s:completeBookmarks -bar NERDTreeFromBookmark call s:initNerdTree('<args>')
-command! -n=0 -complete=customlist,s:completeNERDTreeMirrors -bar NERDTreeMirror call s:initNerdTreeMirror()
+command! -n=1 -nargs=? -complete=customlist,s:completeBookmarks -bar NERDTreeFromBookmark call s:initNerdTree('<args>')
+command! -n=0 -nargs=? -complete=customlist,s:completeNERDTreeMirrors -bar NERDTreeMirror call s:initNerdTreeMirror()
 " SECTION: Auto commands {{{1
 "============================================================
 augroup NERDTree

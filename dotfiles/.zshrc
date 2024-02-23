@@ -70,13 +70,12 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kubectl kubectx)
+plugins=(git kubectl kubectx aws pyenv)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.zsh_secrets
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 export EDITOR='vim'
-export GOPRIVATE=github.com/GoodRx*
 
 # File search functions
 function f() { find . -iname "*$1*" ${@:2} }
@@ -84,6 +83,8 @@ function r() { grep "$1" ${@:2} -R . }
 
 # Create a folder and move into it in one command
 function mkcd() { mkdir -p "$@" && cd "$_"; }
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Example aliases
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
@@ -97,3 +98,8 @@ export NVM_DIR="$HOME/.nvm"
 eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+. "/Users/rpatel/.wasmedge/env"

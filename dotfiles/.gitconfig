@@ -3,15 +3,18 @@
 
 [user]
   name = Rakesh Patel
-  email = rakesh.patel@goodrx.com
+  email = rakesh.patel@kandji.io
 
 [github]
   user = rocpatel
-  email = rakesh.patel@goodrx.com
-  org = GoodRx
+  email = rakesh.patel@kandji.io
+  org = kandji-inc
 
 [url "git@github.com:"]
   insteadOf = https://github.com/
+
+[url "git@gitlab.com:"]
+	insteadOf = https://gitlab.com/
 
 [push]
   #Only Push Upstream for the Current Branch
@@ -80,7 +83,7 @@
   funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
 
 [diff]
-  tool     = vscode
+  tool     = diffmerge
 
 [difftool "vscode"]
   cmd = code --wait --diff $LOCAL $REMOTE
