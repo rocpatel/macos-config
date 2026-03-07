@@ -74,8 +74,7 @@ plugins=(git kubectl kubectx aws pyenv)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.zsh_secrets
-# . "$HOME/.cargo/env"
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # File search functions
 function f() { find . -iname "*$1*" ${@:2} }
@@ -91,15 +90,59 @@ alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 alias g='git'
 alias ghwrk='cd ~/Documents/workspace/github.com'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
 eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH="$HOME/.poetry/bin:$PATH"
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export VOLTA_HOME=$HOME/.volta
 
-. "/Users/rpatel/.wasmedge/env"
+export PATH="$VOLTA_HOME/bin:$HOME/.poetry/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export AWS_CONFIG_FILE=${HOME}/Documents/workspace/github.com/workos/workos/common/config/aws/config.ini
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
+# pnpm
+export PNPM_HOME="/Users/rakesh/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+awsh () {
+  PROFILE="$(aws-vault list --profiles | fzf --prompt="profile> ")" 
+  aws-vault exec "${PROFILE}"
+}
+
+eks-update () {
+  if [[ -z "${AWS_VAULT}" ]]
+  then
+    echo "[ERR] Not in an aws-vault session; be sure to run awsh first" > /dev/stderr
+    return 1
+  fi
+  CLUSTER="$(aws eks list-clusters | jq -r '.clusters[]' | fzf --select-1 --prompt="cluster> ")" 
+  aws eks update-kubeconfig --name "${CLUSTER}"
+}
+
+function mcs {
+  model_prompt="$*"
+  magic-cli suggest "$model_prompt"
+}
+
+function mcf {
+  model_prompt="$*"
+  magic-cli search "$model_prompt"
+}
+
+function mca {
+  model_prompt="$*"
+  magic-cli ask "$model_prompt"
+}
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# Created by `pipx` on 2025-04-28 21:42:07
+export PATH="$PATH:/Users/rakesh/.local/bin"
+

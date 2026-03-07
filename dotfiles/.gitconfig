@@ -3,13 +3,13 @@
 
 [user]
   name = Rakesh Patel
-  email = roc@rocpatel.me
+  email = rakesh@workos.com 
 
 [github]
   user = rocpatel
 
-[url "git@github.com:"]
-  insteadOf = https://github.com/
+# [url "git@github.com:"]
+  # insteadOf = https://github.com/
 
 [url "git@gitlab.com:"]
 	insteadOf = https://gitlab.com/
@@ -96,7 +96,7 @@
   ff = only
   keepBackup = false
   ## OSX/XCode
-  tool     = vscode
+	tool = opendiff
 
 [mergetool] 
   keepBackup = false
@@ -122,3 +122,5 @@
 [init]
   defaultBranch = main
   
+[mergetool "opendiff"]
+	trustExitCode = true
