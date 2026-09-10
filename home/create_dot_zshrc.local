@@ -1,0 +1,5 @@
+# Machine-specific shell configuration belongs in this file.
+# Chezmoi creates it once and leaves subsequent local edits untouched.
+#
+# Example:
+# export AWS_CONFIG_FILE="$HOME/path/to/aws/config.ini"

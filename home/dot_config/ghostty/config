@@ -1,0 +1,16 @@
+theme = Catppuccin Mocha
+
+adjust-cell-height = 10%
+copy-on-select = true
+font-family = "3270 Nerd Font Mono"
+font-size = 14
+font-thicken = true
+mouse-hide-while-typing = true
+macos-non-native-fullscreen = visible-menu
+macos-option-as-alt = true
+window-decoration = none
+window-padding-y = 0
+window-padding-x = 0
+window-padding-color = extend-always
+window-padding-balance = true
+window-save-state = always

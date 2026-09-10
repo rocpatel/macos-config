@@ -1,9 +1,6 @@
-ZSHDIR := ~/.oh-my-zsh
-HOMEBREWBIN := /opt/homebrew/bin/brew
-GITCONFIG := ~/.gitconfig
-GITIGNORE := ~/.gitignore
-GITMESSAGE := ~/.gitmessage
-VSCODE_EXTENSIONS := vscodevim.vim ms-azuretools.vscode-docker eamodio.gitlens golang.go ms-kubernetes-tools.vscode-kubernetes-tools
+HOMEBREWBIN := $(if $(filter arm64,$(shell uname -m)),/opt/homebrew/bin/brew,/usr/local/bin/brew)
+CHEZMOIBIN := $(dir $(HOMEBREWBIN))chezmoi
+SSH_KEY := $(HOME)/.ssh/id_ed25519
 
 # Get the path to this Makefile and directory
 MAKEFILE_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
@@ -11,48 +8,29 @@ MAKEFILE_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 help: ## show help message
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[$$()% 0-9a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-bootstrap: macos-defaults homebrew ohmyzsh gitconfig vscode-setup ssh-keys ## bootstrap new laptop
+bootstrap: macos-defaults dotfiles ## bootstrap new laptop
 
 macos-defaults: ## update macos settings
 	@defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 	@mkdir -p ~/Documents/screenshots
 	@defaults write com.apple.screencapture location ~/Documents/screenshots && killall SystemUIServer
   
-ohmyzsh: | $(ZSHDIR) ## setup zsh
-	@rm -rf ~/.zshrc
-	@ln -s $(MAKEFILE_DIR)/dotfiles/.zshrc ~/.zshrc
-
-gitconfig: ## setup gitconfig
-	@rm -rf $(GITCONFIG)
-	@rm -rf $(GITIGNORE)
-	@rm -rf $(GITMESSAGE)
-	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitconfig $(GITCONFIG)
-	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitignore $(GITIGNORE)
-	@ln -s $(MAKEFILE_DIR)/dotfiles/.gitmessage $(GITMESSAGE)
-
-vim-setup: ## setup vim
-	@rm -rf ~/.vimrc
-	@ln -s $(MAKEFILE_DIR)/dotfiles/.vimrc ~/.vimrc
-	@rm -rf ~/.vim
-	@ln -s $(MAKEFILE_DIR)/.vim ~/.vim
-
 homebrew: | $(HOMEBREWBIN) ## install homebrew
 	@echo "Homebrew is installed"
-	@brew bundle
+	@$(HOMEBREWBIN) bundle --file="$(MAKEFILE_DIR)/Brewfile"
 
-vscode-setup: homebrew ## setup vscode
-	for EXTENSION in $(VSCODE_EXTENSIONS) ; do code --force --install-extension $$EXTENSION; done
-	@defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
-	@defaults write com.microsoft.VSCodeInsiders ApplePressAndHoldEnabled -bool false
-	@defaults write com.visualstudio.code.oss ApplePressAndHoldEnabled -bool false
+dotfiles: homebrew ## install dotfiles with chezmoi
+	@$(CHEZMOIBIN) --source "$(MAKEFILE_DIR)" apply --verbose
 
-ssh-keys: ## generate ssh key for this machine
-	@ssh-keygen -t rsa -b 4096
-
-$(ZSHDIR):
-	@curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -
+ssh-key: ## generate an optional Ed25519 SSH key
+	@if [ -e "$(SSH_KEY)" ] || [ -e "$(SSH_KEY).pub" ]; then \
+		echo "SSH key already exists: $(SSH_KEY)"; \
+		exit 1; \
+	fi
+	@mkdir -p "$(dir $(SSH_KEY))"
+	@ssh-keygen -t ed25519 -f "$(SSH_KEY)"
 
 $(HOMEBREWBIN):
 	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-.PHONY: ohmyzsh help bootstrap macos-defaults ohmyzsh gitconfig vim-setup homebrew vscode-setup ssh-keys
+.PHONY: help bootstrap macos-defaults homebrew dotfiles ssh-key

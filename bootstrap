@@ -1,19 +1,26 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-COMMANDLINE_TOOLS="/Library/Developer/CommandLineTools"
-GITHUB_WORKSPACE=${GITHUB_WORKSPACE:="~/Documents/workspace/github.com"}
+set -eu
 
-if [ ! -d "$COMMANDLINE_TOOLS" ]; then
+github_workspace=${GITHUB_WORKSPACE:-"$HOME/Documents/workspace/github.com"}
+repo_parent="$github_workspace/rocpatel"
+repo_dir="$repo_parent/macos-config"
+repo_url="https://github.com/rocpatel/macos-config"
+
+if ! xcode-select -p >/dev/null 2>&1; then
   xcode-select --install
+  printf '%s\n' "Command Line Tools installation started. Re-run this script when it finishes."
+  exit 0
 fi
 
-# download setup repo
-mkdir -p ${GITHUB_WORKSPACE}/rocpatel/macos-config
-pushd ${GITHUB_WORKSPACE}/rocpatel
-git clone --branch main https://github.com/rocpatel/macos-config
-popd
-pushd ${GITHUB_WORKSPACE}/rocpatel/macos-config
+if [ -d "$repo_dir/.git" ]; then
+  printf 'Using existing checkout: %s\n' "$repo_dir"
+elif [ -e "$repo_dir" ]; then
+  printf 'Cannot clone: %s exists but is not a Git repository.\n' "$repo_dir" >&2
+  exit 1
+else
+  mkdir -p "$repo_parent"
+  git clone --branch main --single-branch "$repo_url" "$repo_dir"
+fi
 
-make bootstrap
-
-popd
+exec make -C "$repo_dir" bootstrap

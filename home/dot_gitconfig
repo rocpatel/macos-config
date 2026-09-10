@@ -3,7 +3,7 @@
 
 [user]
   name = Rakesh Patel
-  email = rakesh@workos.com 
+  email = roc@patelr.us
 
 [github]
   user = rocpatel
@@ -23,7 +23,7 @@
   autocrlf = false
   safecrlf = true
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-  editor=/usr/bin/vim -u NONE
+  editor=nvim
 
 [color]
   branch = auto
@@ -81,10 +81,7 @@
   funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
 
 [diff]
-  tool     = diffmerge
-
-[difftool "vscode"]
-  cmd = code --wait --diff $LOCAL $REMOTE
+  tool = nvimdiff
 
 [merge]
   # For now force every merge to be visible, it is likly that only is what we want.
@@ -94,24 +91,10 @@
   # --ff-only
   #   Refuse to merge and exit with a non-zero status unless the current HEAD is already up-to-date or the merge can be resolved as a fast-forward.
   ff = only
+  tool = nvimdiff
+
+[mergetool]
   keepBackup = false
-  ## OSX/XCode
-	tool = opendiff
-
-[mergetool] 
-  keepBackup = false
-
-[mergetool "diffmerge"]
-# $LOCAL – Current branch version
-# $REMOTE – Version to be merged
-# $BASE – Common ancestor
-# $MERGED – File where results will be written
-# current version in the left pane, the merge result in the middle pane and the remote version in the right pane
-  cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
-  trustExitCode = false
-
-[mergetool "vscode"]
-  cmd = code --wait $MERGED
 
 [filter "lfs"]
   clean = git-lfs clean -- %f
@@ -121,6 +104,3 @@
 
 [init]
   defaultBranch = main
-  
-[mergetool "opendiff"]
-	trustExitCode = true

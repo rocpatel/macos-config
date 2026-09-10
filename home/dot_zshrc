@@ -1,0 +1,80 @@
+# Paths
+typeset -U path PATH
+path=(
+  "$HOME/.local/bin"
+  $path
+)
+
+# Default tools
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
+
+# History
+HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+
+setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_SAVE_NO_DUPS
+setopt SHARE_HISTORY
+
+# Completion
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Shell behavior
+setopt AUTO_CD
+setopt INTERACTIVE_COMMENTS
+
+# Aliases
+alias cppcompile='c++ -std=c++11 -stdlib=libc++'
+alias g='git'
+alias ghwrk='cd ~/Documents/workspace/github.com'
+alias vi='nvim'
+alias vim='nvim'
+
+# File search helpers
+f() {
+  find . -iname "*${1:-}*" "${@:2}"
+}
+
+r() {
+  rg "$@" .
+}
+
+# Create a directory and enter it.
+mkcd() {
+  if (( $# != 1 )); then
+    print -u2 "usage: mkcd <directory>"
+    return 2
+  fi
+
+  mkdir -p -- "$1" && cd -- "$1"
+}
+
+# fzf key bindings and fuzzy completion
+if (( $+commands[fzf] )); then
+  source <(fzf --zsh)
+fi
+
+# Machine-specific environment variables and secrets belong here.
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
+# Keep mise late in startup so its selected tools take PATH precedence.
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
+elif [[ -x "$HOME/.local/bin/mise" ]]; then
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
+
+# Prompt
+if (( $+commands[starship] )); then
+  eval "$(starship init zsh)"
+fi
