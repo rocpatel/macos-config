@@ -1,63 +1,69 @@
 # macos-config
 
-Personal macOS configuration managed with [chezmoi](https://www.chezmoi.io/).
+Personal macOS setup managed by the bootstrap script and Makefile. Homebrew
+installs applications and command-line tools, while chezmoi applies the files
+under `home/`.
 
-## Layout
+## Set up a new Mac
 
-The files under `home/` are chezmoi's source state. The Makefile installs
-packages, applies dotfiles, and configures macOS defaults.
+Run the bootstrap script:
 
-The repository uses `.chezmoiroot`, so chezmoi reads source-state entries from
-`home/` without treating repository support files such as `Brewfile` and this
-README as files that belong in `$HOME`.
+```sh
+curl -Ls https://raw.githubusercontent.com/rocpatel/macos-config/main/bootstrap | sh
+```
 
-## Preview changes
+The script installs Apple's Command Line Tools when needed, clones this
+repository to `~/Documents/workspace/github.com/rocpatel/macos-config`, and
+runs `make bootstrap` from the checkout.
 
-From the repository root:
+If the Command Line Tools installer opens, let it finish and then run the
+bootstrap command again.
+
+To use a different workspace directory, set `GITHUB_WORKSPACE`:
+
+```sh
+GITHUB_WORKSPACE=/path/to/github/workspace \
+  curl -Ls https://raw.githubusercontent.com/rocpatel/macos-config/main/bootstrap | sh
+```
+
+## Use an existing checkout
+
+Run these commands from the repository root:
+
+```sh
+make help
+make bootstrap
+```
+
+`make bootstrap` applies the macOS defaults, installs everything in the
+`Brewfile`, and applies the dotfiles with chezmoi. It is safe to run again when
+the configuration changes.
+
+The individual steps are also available:
+
+```sh
+make macos-defaults  # Apply macOS preferences
+make homebrew        # Install and update Brewfile dependencies
+make dotfiles        # Install dependencies and apply the dotfiles
+make ssh-key         # Create an optional Ed25519 SSH key
+```
+
+The SSH-key target is intentionally separate from bootstrap and refuses to
+overwrite an existing key.
+
+## Preview dotfile changes
+
+Before running `make dotfiles`, inspect what chezmoi will change:
 
 ```sh
 chezmoi --source . diff
 ```
 
-Review the diff before applying anything. When it looks correct:
+The `.chezmoiroot` file tells chezmoi to use `home/` as its source state, so
+repository files such as the `Brewfile`, Makefile, and README are not copied to
+the home directory.
 
-```sh
-make dotfiles
-```
-
-The `dotfiles` target installs packages from the Brewfile, including chezmoi,
-then applies the source state from this checkout.
+## Finish tmux setup
 
 After starting tmux for the first time, press `prefix + I` to install the
-plugins declared in the tmux configuration with TPM.
-
-## Set up a new Mac
-
-The bootstrap script installs Apple's Command Line Tools when necessary, clones
-this repository, installs the Brewfile, and applies the dotfiles with chezmoi:
-
-```sh
-GITHUB_WORKSPACE=/path/to/github/workspace curl -Ls https://raw.githubusercontent.com/rocpatel/macos-config/main/bootstrap | sh
-```
-
-If Command Line Tools were not already present, let their installer finish and
-then run the command again.
-
-SSH-key generation is deliberately separate and will refuse to overwrite an
-existing Ed25519 key:
-
-```sh
-make ssh-key
-```
-
-## Set up with chezmoi directly
-
-Install chezmoi, initialize this repository, inspect the proposed changes, and
-only then apply them:
-
-```sh
-brew install chezmoi
-chezmoi init rocpatel/macos-config
-chezmoi diff
-chezmoi apply --verbose
-```
+plugins declared in `.tmux.conf` with TPM.
