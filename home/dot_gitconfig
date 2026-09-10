@@ -71,8 +71,8 @@
   gr2 = log --graph --all --pretty=oneline --decorate --abbrev-commit
   gr = log --graph --all --pretty='format:%h %C(yellow)%ar%Creset %Cgreen%aN%Creset%C(yellow)%d%Creset %s'
 
-  plom = pull origin master
-  psom = push origin master
+  plom = pull origin main
+  psom = push origin main
 
 [apply]
   whitespace = strip
