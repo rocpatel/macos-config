@@ -1,5 +1,5 @@
 theme = dark:Catppuccin Frappe,light:Catppuccin Latte
-command = shell:exec "$HOME/.local/bin/tmux-start"
+command = shell:"$HOME/.local/bin/tmux-start"
 
 font-family = "3270 Nerd Font Mono"
 font-size = 14
