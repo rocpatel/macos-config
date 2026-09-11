@@ -67,3 +67,13 @@ the home directory.
 
 After starting tmux for the first time, press `prefix + I` to install the
 plugins declared in `.tmux.conf` with TPM.
+
+## Ghostty session startup
+
+Ghostty runs `~/.local/bin/tmux-start` for each new terminal surface. If tmux
+has existing sessions, an fzf picker shows each session's name, window count,
+and active directory. The picker can also create a new named session.
+
+When no sessions exist, a new session starts automatically. Press Escape to
+cancel the picker and open a normal Zsh shell instead. Detaching from or exiting
+tmux also leaves the Ghostty window at a normal shell.

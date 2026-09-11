@@ -1,16 +1,25 @@
-theme = Catppuccin Mocha
+theme = dark:Catppuccin Frappe,light:Catppuccin Latte
+command = shell:exec "$HOME/.local/bin/tmux-start"
 
-adjust-cell-height = 10%
-copy-on-select = true
 font-family = "3270 Nerd Font Mono"
 font-size = 14
 font-thicken = true
+adjust-cell-height = 15%
+
+cursor-style = block
+copy-on-select = clipboard
 mouse-hide-while-typing = true
-macos-non-native-fullscreen = visible-menu
-macos-option-as-alt = true
-window-decoration = none
-window-padding-y = 0
-window-padding-x = 0
+
+window-decoration = true
+macos-titlebar-style = transparent
+window-padding-y = 10
+window-padding-x = 10
 window-padding-color = extend-always
 window-padding-balance = true
 window-save-state = always
+background-opacity = 0.8
+background-blur = 90
+maximize = true
+
+macos-non-native-fullscreen = visible-menu
+macos-option-as-alt = true

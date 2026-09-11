@@ -1,0 +1,73 @@
+#!/bin/sh
+
+set -u
+
+# macOS GUI applications may start with a minimal PATH.
+PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:${PATH:-/usr/bin:/bin:/usr/sbin:/sbin}"
+export PATH
+
+start_shell() {
+  if [ -n "${SHELL:-}" ] && [ -x "$SHELL" ]; then
+    exec "$SHELL" -l
+  fi
+
+  exec /bin/zsh -l
+}
+
+# Avoid accidentally nesting tmux if invoked from an existing session.
+if [ -n "${TMUX:-}" ]; then
+  start_shell
+fi
+
+if ! command -v tmux >/dev/null 2>&1; then
+  printf '%s\n' "tmux is unavailable; starting a normal shell." >&2
+  start_shell
+fi
+
+# No server or no sessions: create one immediately.
+if ! tmux has-session 2>/dev/null; then
+  tmux new-session
+  start_shell
+fi
+
+if ! command -v fzf >/dev/null 2>&1; then
+  printf '%s\n' "fzf is unavailable; starting a normal shell." >&2
+  start_shell
+fi
+
+choice=$(
+  {
+    printf '%s\n' "[new] Create a new session"
+    tmux list-sessions \
+      -F '#{session_name}: #{session_windows} window(s) — #{pane_current_path}'
+  } |
+    fzf \
+      --no-sort \
+      --layout=reverse \
+      --border \
+      --prompt='tmux> ' \
+      --header='Select a session; Esc opens a normal shell'
+) || start_shell
+
+[ -n "$choice" ] || start_shell
+
+case "$choice" in
+  "[new] Create a new session")
+    printf 'New session name (leave blank for automatic): '
+    IFS= read -r session_name || start_shell
+
+    if [ -n "$session_name" ]; then
+      tmux new-session -s "$session_name"
+    else
+      tmux new-session
+    fi
+    ;;
+
+  *)
+    session_name=${choice%%:*}
+    tmux attach-session -t "$session_name"
+    ;;
+esac
+
+# Keep the Ghostty window usable after detaching or exiting tmux.
+start_shell
