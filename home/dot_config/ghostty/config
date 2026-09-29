@@ -12,8 +12,8 @@ mouse-hide-while-typing = true
 
 window-decoration = true
 macos-titlebar-style = transparent
-window-padding-y = 10
-window-padding-x = 10
+window-padding-y = 0
+window-padding-x = 0
 window-padding-color = extend-always
 window-padding-balance = true
 window-save-state = always
