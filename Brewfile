@@ -1,5 +1,5 @@
 # Third-party repositories used by direct workstation dependencies.
-tap "bufbuild/buf"
+tap "anomalyco/tap"
 tap "gofireflyio/aiac"
 tap "telepresenceio/telepresence"
 tap "terraform-linters/tap"
@@ -79,8 +79,10 @@ brew "terragrunt"
 brew "tfmigrate"
 brew "terraform-linters/tap/tflint"
 
+# AI-assisted development.
+brew "anomalyco/tap/opencode"
+
 # Application, API, and documentation tooling.
-brew "bufbuild/buf/buf"
 brew "cdk8s"
 brew "cue"
 brew "d2"
@@ -90,14 +92,8 @@ brew "graphviz"
 brew "grpcurl"
 brew "hey"
 brew "httpie"
-brew "hugo"
-brew "kcat"
 brew "llvm"
 brew "mdbook"
-brew "protobuf"
-brew "protoc-gen-go"
-brew "protoc-gen-go-grpc"
-brew "yoheimuta/protolint/protolint"
 brew "yj"
 
 # Desktop applications and fonts.
