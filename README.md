@@ -39,6 +39,12 @@ make bootstrap
 `Brewfile`, and applies the dotfiles with chezmoi. It is safe to run again when
 the configuration changes.
 
+The Brewfile provisions a complete Kubernetes and multi-cloud development
+workstation: AWS, Azure, and Google Cloud CLIs; Kubernetes and GitOps tools;
+Terraform and OpenTofu; container security utilities; and the local shell and
+editor dependencies. Language runtimes such as Go and Node are managed by mise
+instead of being pinned as Homebrew formulas.
+
 The individual steps are also available:
 
 ```sh
