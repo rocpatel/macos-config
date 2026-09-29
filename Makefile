@@ -31,6 +31,6 @@ ssh-key: ## generate an optional Ed25519 SSH key
 	@ssh-keygen -t ed25519 -f "$(SSH_KEY)"
 
 $(HOMEBREWBIN):
-	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	/bin/bash -c "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/tty
 
 .PHONY: help bootstrap macos-defaults homebrew dotfiles ssh-key
