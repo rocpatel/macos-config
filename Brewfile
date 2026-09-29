@@ -1,7 +1,6 @@
 # Third-party repositories used by direct workstation dependencies.
 tap "bufbuild/buf"
 tap "gofireflyio/aiac"
-tap "hashicorp/tap"
 tap "telepresenceio/telepresence"
 tap "terraform-linters/tap"
 tap "tilt-dev/tap"
@@ -78,7 +77,6 @@ brew "opentofu"
 brew "terraform-docs"
 brew "terragrunt"
 brew "tfmigrate"
-brew "hashicorp/tap/terraform"
 brew "terraform-linters/tap/tflint"
 
 # Application, API, and documentation tooling.

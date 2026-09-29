@@ -42,8 +42,8 @@ the configuration changes.
 The Brewfile provisions a complete Kubernetes and multi-cloud development
 workstation: AWS, Azure, and Google Cloud CLIs; Kubernetes and GitOps tools;
 Terraform and OpenTofu; container security utilities; and the local shell and
-editor dependencies. Language runtimes such as Go and Node are managed by mise
-instead of being pinned as Homebrew formulas.
+editor dependencies. Version-sensitive tools such as Go, Node, and Terraform
+are managed by mise instead of being pinned as Homebrew formulas.
 
 The individual steps are also available:
 
