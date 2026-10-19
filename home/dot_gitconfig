@@ -58,6 +58,7 @@
 [alias]
   up = status
   st = status
+  sts = status --short
   ci = commit
   di = diff
   br = branch
