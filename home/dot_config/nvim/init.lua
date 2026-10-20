@@ -500,9 +500,14 @@ local function get_notes_path()
 end
 
 local function setup_obsidian()
+  local notes_path = get_notes_path()
+  if vim.fn.isdirectory(notes_path) ~= 1 then
+    return
+  end
+
   require("obsidian").setup({
     legacy_commands = false,
-    workspaces = { { name = "Notes", path = get_notes_path() } },
+    workspaces = { { name = "Notes", path = notes_path } },
     picker = { name = "fzf-lua" },
   })
 

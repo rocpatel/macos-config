@@ -1,4 +1,4 @@
-theme = dark:Catppuccin Frappe,light:Catppuccin Latte
+theme = Catppuccin Mocha
 command = shell:"$HOME/.local/bin/tmux-start"
 
 font-family = "3270 Nerd Font Mono"
@@ -17,7 +17,6 @@ window-padding-x = 0
 window-padding-color = extend-always
 window-padding-balance = true
 window-save-state = always
-background-opacity = 0.8
 background-blur = 90
 maximize = true
 
